@@ -9,14 +9,24 @@ export function modalWindow() {
 	function openModal() {
 		modal.classList.add('show');
 		modal.classList.remove('hide');
-		document.body.style.overflow = 'hidden';
+		document.body.style.overflow = 'hidden'; // - отключаем прокрутку страницы при открытии модалки
+		clearInterval(modalTimerId); // - отключаем авто открытие модалки если пользователь сам открыл его
 	}
 	// Закрываем модальное окно
 	function closeModal() {
 		modal.classList.add('hide');
 		modal.classList.remove('show');
-		document.body.style.overflow = '';
+		document.body.style.overflow = ''; // - возвращаем прокрутку страницы при закрытии модалки
 	}
+	// Вызываем модальное окно когда пользователь долистал до конца страницы 
+	function showModalByScroll() {
+		const rootElement = document.documentElement;
+		if (window.scrollY + rootElement.clientHeight >= rootElement.scrollHeight) {
+			openModal();
+			window.removeEventListener('scroll', showModalByScroll) // - отключаем повторные вызовы при скролле в будущем
+		}
+	}
+
 	//* Использование и назначение
 	// Назначаем обработчик событий на все кнопки 'Связаться с нами' на странице
 	modalTrigger.forEach((btn) => {
@@ -36,4 +46,9 @@ export function modalWindow() {
 			closeModal();
 		}
 	});
+
+	//*----------------------------------------------------------------
+	const modalTimerId = setTimeout(openModal, 15000); // - вызываем модальное окно автоматически через 15с
+
+	window.addEventListener('scroll', showModalByScroll); // - вызываем модалку при прокрутке в самый конец страницы
 }
