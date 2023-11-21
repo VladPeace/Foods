@@ -23,7 +23,7 @@ export function modalWindow() {
 		const rootElement = document.documentElement;
 		if (window.scrollY + rootElement.clientHeight >= rootElement.scrollHeight) {
 			openModal();
-			window.removeEventListener('scroll', showModalByScroll) // - отключаем повторные вызовы при скролле в будущем
+			window.removeEventListener('scroll', showModalByScroll); // - отключаем повторные вызовы при скролле в будущем
 		}
 	}
 
