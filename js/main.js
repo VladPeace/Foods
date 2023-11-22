@@ -8,5 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	timerDeadLine();
 	modalWindow();
 	classMenu();
+
+	function calcOrDoable(number, basis = 2) {
+		console.log(number * basis);
+	}
+	calcOrDoable(5)
 });
 
