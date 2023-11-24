@@ -1,4 +1,5 @@
 export function timerDeadLine() {
+	//<-----Создаем таймер горячего предложения на странице-------->
 
 	const deadLine = '2023-11-20';
 

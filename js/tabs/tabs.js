@@ -1,5 +1,5 @@
 export function initializeTabs() {
-
+	//<-----Создаем и добавляем интерактив на табы-------->
 	const tabs = document.querySelectorAll('.tabheader__item'),
 		tabsContent = document.querySelectorAll('.tabcontent'),
 		tabsParent = document.querySelector('.tabheader__items');

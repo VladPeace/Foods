@@ -1,5 +1,6 @@
 export function modalWindow() {
-
+	//<-----Создаем модальное окно------->
+	
 	const modalTrigger = document.querySelectorAll('[data-modal]');
 	const btnClose = document.querySelector('[data-close]');
 	const modal = document.querySelector('.modal');

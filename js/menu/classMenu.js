@@ -19,11 +19,13 @@ export function classMenu() {
 
 		render() {
 			const element = document.createElement('div');
+			// Устанавливаем параметр по умолчанию
 			if (this.classes.length === 0) {
-				this.element = 'menu__item';
-				element.classList.add(this.element);
+				this.element = 'menu__item'; // Присваиваем строку 'menu__item' в свойство (которое в данном случае хранит значение (строку)) this.element
+				element.classList.add(this.element); // Присваиваем к classList значение которое хранит element тем самым создаем новый class для элемента div
 			} else {
-				this.classes.forEach((className) => element.classList.add(className));
+				// className - условное название тех объектов которые мы передаем в массив ...classes
+				this.classes.forEach((className) => element.classList.add(className)); // Присваиваем значения (каждый класс в массиве) className в класс элемента 'div'
 			}
 			element.innerHTML = `
             <img src=${this.src} alt=${this.alt} />
