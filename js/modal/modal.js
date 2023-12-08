@@ -58,11 +58,23 @@ export function modalWindow() {
 
 	//Подвязываем под все формы postData
 	forms.forEach((item) => {
-		postData(item);
+		bindPostData(item);
 	});
 
 	//* Функция постинга данных
-	function postData(form) {
+	const postData = async (url, data) => {
+		const res = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json; charset=utf-8'
+			},
+			body: data
+		});
+		return await res.json();
+	};
+
+	//* Функция привязки постинга данных
+	function bindPostData(form) {
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
@@ -77,21 +89,10 @@ export function modalWindow() {
 			// request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); //* Для отправка данных в формате JSON заголовок нужен
 			const formData = new FormData(form);
 
-			//* 2. Трансформация формдейт в JSON формат. отправка данных в формате JSON
-			const object = {};
-			formData.forEach(function (value, key) {
-				object[key] = value;
-			});
+			//* Более элегантный способ Трансформации формдейт в JSON формат
+			const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-			//* 1. Классическая формдейт
-			fetch('server.php', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json; charset=utf-8' //* 2. отправка JSON
-				},
-				// body: formData //* 1
-				body: JSON.stringify(object) //* 2
-			}).then(data => data.text())
+			postData('http://localhost:3000/requests', json)
 				.then(data => {
 					console.log(data);
 					showThanksModal(message.success);
@@ -128,7 +129,7 @@ export function modalWindow() {
 		}, 4000);
 	}
 
-	fetch('http://localhost:3000/menu')
-		.then(data => data.json())
-		.then(res => console.log(res));
+	// fetch('http://localhost:3000/menu')
+	// 	.then(data => data.json())
+	// 	.then(res => console.log(res));
 };
