@@ -41,7 +41,8 @@ export function classMenu() {
 		}
 	}
 
-	//* Функция постинга данных
+	//* Функция постинга данных (Не нужна так как использовали библиотеку AXIOS)
+	/**
 	const getResource = async (url) => {
 		const res = await fetch(url);
 		if (!res.ok) {
@@ -49,34 +50,46 @@ export function classMenu() {
 		}
 		return await res.json();
 	};
+	*/
 
-	//* Конструктор карточек получаемых с data-base (db.json)
-	getResource('http://localhost:3000/menu')
+	//* Варианты конструктора карточек:
+	/** 1. Конструктор карточек получаемых с data-base (db.json)
+		getResource('http://localhost:3000/menu')
 		.then((data => {
 			data.forEach(({ img, altimg, title, descr, price }) => {
 				new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
 			});
 		}));
+	*/
 
-	// //* Второй вариант конструктора карточек (формирует верстку на лету) Подходит в случае если нам нужно только один раз что-то построить
-	// getResource('http://localhost:3000/menu')
-	// 	.then(data => createCard(data));
-	
-	// function createCard(data) {
-	// 	data.forEach(({ img, altimg, title, descr, price }) => {
-	// 		const element = document.createElement('div');
-	// 		element.classList.add('menu__item');
-	// 		element.innerHTML = `
-	// 					<img src=${img} alt=${altimg} />
-  //           <h3 class="menu__item-subtitle">${title}</h3>
-  //           <div class="menu__item-descr">${descr}</div>
-  //           <div class="menu__item-divider"></div>
-  //           <div class="menu__item-price">
-  //             <div class="menu__item-cost">Цена:</div>
-  //             <div class="menu__item-total"><span>${price}</span> грн/день</div>
-  //           </div>
-	// 		`;
-	// 		document.querySelector('.menu .container').append(element);
-	// 	});
-	// }
-};
+	//! 2. Конструктор карточек через библиотеку axios
+	axios.get('http://localhost:3000/menu')
+		.then(data => {
+			data.data.forEach(({ img, altimg, title, descr, price }) => {
+				new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+			});
+		});
+
+	/**  3. вариант конструктора карточек (формирует верстку на лету) Подходит в случае если нам нужно только один раз что-то построить
+	getResource('http://localhost:3000/menu')
+		.then(data => createCard(data));
+
+	function createCard(data) {
+		data.forEach(({ img, altimg, title, descr, price }) => {
+			const element = document.createElement('div');
+			element.classList.add('menu__item');
+			element.innerHTML = `
+							<img src=${img} alt=${altimg} />
+							<h3 class="menu__item-subtitle">${title}</h3>
+							<div class="menu__item-descr">${descr}</div>
+							<div class="menu__item-divider"></div>
+							<div class="menu__item-price">
+								<div class="menu__item-cost">Цена:</div>
+								<div class="menu__item-total"><span>${price}</span> грн/день</div>
+							</div>
+				`;
+			document.querySelector('.menu .container').append(element);
+		});
+	}
+*/
+}; 
